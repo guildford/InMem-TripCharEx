@@ -1,11 +1,9 @@
-package utils
+package examples
 
-import org.apache.spark.SparkContext
-import org.apache.spark.SparkConf
-
-import org.apache.spark.mllib.regression.LabeledPoint
-import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.classification.NaiveBayes
+import org.apache.spark.mllib.linalg.Vectors
+import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.{SparkConf, SparkContext}
 
 object SparkMLLibUtility {
 

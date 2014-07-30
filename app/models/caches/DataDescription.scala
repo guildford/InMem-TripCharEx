@@ -16,18 +16,25 @@ class DataDescription(val path: String, val date: Int) {
   val loadMoment: Long = System.currentTimeMillis()
 }
 
-object BusCard {
+case object BusCard {
 
   val originFormat: String = ""
 
-  val fields: mutable.HashMap[Int, String] = mutable.HashMap(
-    2 -> "TimeStamp",
-    6 -> "CardId",
-    9 -> "LineId",
-    10 -> "VehicleId",
-    11 -> "AboardId",
-    12 -> "DebusId")
+  //  val fields: mutable.HashMap[Int, String] = mutable.HashMap(
+  //    2 -> "TimeStamp",
+  //    6 -> "CardId",
+  //    9 -> "LineId",
+  //    10 -> "VehicleId",
+  //    11 -> "AboardId",
+  //    12 -> "DebusId")
+  val fields: mutable.HashMap[String, Int] = mutable.HashMap(
+    "TimeStamp" -> 2,
+    "CardId" -> 6,
+    "LineId" -> 9,
+    "VehicleId" -> 10,
+    "AboardId" -> 11,
+    "DebusId" -> 12)
 
-  val frequently: Array[Int] = Array(2, 6, 9, 10, 11, 12)
-
+  //  val frequently: Array[Int] = Array(2, 6, 9, 10, 11, 12)
+  val frequently: Array[String] = Array("TimeStamp", "CardId", "LineId", "VehicleId", "AboardId", "DebusId")
 }
