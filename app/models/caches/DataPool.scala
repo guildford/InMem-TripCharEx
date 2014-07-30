@@ -23,8 +23,8 @@ object DataPool {
   val totalCapacity: Double = 8
   val loadFactor: Double = 0.5
 
-  def get(data: DataDescription): Option[RDD[String]] = {
-    dataTable.get(data)
+  def get(des: DataDescription): Option[RDD[String]] = {
+    dataTable.get(des)
   }
 
   def put(des: DataDescription): Boolean = {
@@ -33,8 +33,35 @@ object DataPool {
   }
 
   def loadAll {
-    for (rdd <- dataTable.values) {
-      rdd.cache.count
+    for (key <- dataTable.keySet) {
+      key match {
+        case BusCard(_,_) =>{
+          val s = dataTable.get(key)  match {
+            case Some(rdd) => {
+//              println("###")
+              val rddcache = rdd.map(line => {
+                val s = line.split(",")
+//                ("CardId"->s(BusCard.fields.getOrElse("CardId", -1)),
+//                  "LineId"->s(BusCard.fields.getOrElse("LineId", -1)),
+//                  "VehicleId"->s(BusCard.fields.getOrElse("VehicleId", -1)),
+//                  "AboardId"->s(BusCard.fields.getOrElse("AboardId", -1)),
+//                  "DebusId"->s(BusCard.fields.getOrElse("DebusId", -1)),
+//                  "TimeStamp"->s(BusCard.fields.getOrElse("TimeStamp", -1)))
+                s(BusCard.fields.getOrElse("CardId", -1)) + "," +
+                  s(BusCard.fields.getOrElse("LineId", -1)) + "," +
+                  s(BusCard.fields.getOrElse("VehicleId", -1)) + "," +
+                  s(BusCard.fields.getOrElse("AboardId", -1)) + "," +
+                  s(BusCard.fields.getOrElse("DebusId", -1)) + "," +
+                  s(BusCard.fields.getOrElse("TimeStamp", -1))
+              }).cache()
+              rddcache.count()
+              dataTable(key) = rddcache
+            }
+//            case None =>
+          }
+        }
+//        case None =>
+      }
     }
   }
 

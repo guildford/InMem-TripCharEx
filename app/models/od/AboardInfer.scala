@@ -1,6 +1,8 @@
 package models.od
 
 import models.caches.{BusCard, DataDescription, DataPool}
+import utils.Format._
+import utils.AppRuntimeStat._
 
 /**
  * Created by GUILDFORD on 2014/7/28.
@@ -11,10 +13,14 @@ object AboardInfer {
 
     // 638 route sample
     val path: String = "public/data/BusCard/sample"
-    val des: DataDescription = new DataDescription(path, 731)
+    val des: BusCard = new BusCard(path, 820)
 
     DataPool.put(des)
+    DataPool.loadAll
+
+    val start = System.currentTimeMillis()
     aboardTime(des)
+    printDuration(start)
 
   }
 
@@ -22,16 +28,9 @@ object AboardInfer {
     val option = DataPool.get(des)
     for (data <- option) {
       // TODO for all DBR-routes
-      val cleaned = data.map(line => {
+      val cleaned = data.keyBy(line => {
         val s = line.split(",")
-        var tp = ("")
-        for (label <- BusCard.frequently) {
-          val option = BusCard.fields.get(label)
-          for (t <- option) {
-            tp += s(t)
-          }
-        }
-        tp
+        (s(1),s(2),stamp2seconds(s(5)))
       })
       cleaned.take(10).foreach(println)
     }

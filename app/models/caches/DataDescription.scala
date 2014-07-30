@@ -5,14 +5,16 @@ import scala.collection.mutable
 /**
  * Created by GUILDFORD on 2014/7/29.
  */
-//abstract class DataDescription {
-//  val path : String
-//  val date : Int
-//  val loadMoment : Long
-//}
+abstract class DataDescription {
+  val path : String
+  val date : Int
+  val loadMoment : Long
+}
 
-//class BusCard(p : String, d : Int) extends DataDescription{
-class DataDescription(val path: String, val date: Int) {
+case class BusCard(p : String, d : Int) extends DataDescription{
+//class DataDescription(val path: String, val date: Int) {
+  val path : String = p
+  val date : Int = d
   val loadMoment: Long = System.currentTimeMillis()
 }
 
