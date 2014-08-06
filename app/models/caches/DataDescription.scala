@@ -7,7 +7,7 @@ import scala.collection.mutable
  */
 abstract class DataDescription {
   val path : String
-  val date : Int
+  //  val date : Int
   val loadMoment : Long
 }
 
@@ -39,4 +39,10 @@ case object BusCard {
 
   //  val frequently: Array[Int] = Array(2, 6, 9, 10, 11, 12)
   val frequently: Array[String] = Array("TimeStamp", "CardId", "LineId", "VehicleId", "AboardId", "DebusId")
+}
+
+
+case class FileAccessLog(p: String) extends DataDescription {
+  val path: String = p
+  val loadMoment: Long = System.currentTimeMillis()
 }

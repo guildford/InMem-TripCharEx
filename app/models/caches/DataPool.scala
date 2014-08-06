@@ -60,7 +60,15 @@ object DataPool {
 //            case None =>
           }
         }
-//        case None =>
+
+        case FileAccessLog(p) => {
+          dataTable.get(key) match {
+            case Some(rdd) => {
+              println("Caching file access logs : " + rdd.cache().count() + " transactions.")
+            }
+          }
+        }
+        //        case None =>
       }
     }
   }
